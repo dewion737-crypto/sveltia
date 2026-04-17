@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: ВАШ_ЛОГИН/my-site
+  repo: dewion737-crypto/sveltia 
 
 media_folder: media
 
