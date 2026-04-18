@@ -1,0 +1,54 @@
+---
+layout: default
+---
+
+<!-- Шаблон для статей блога -->
+<article class="post-article">
+    <div class="post-article__container">
+
+        {% if page.post_image %}
+        <div class="post-article__cover">
+            <img src="{{ page.post_image }}" alt="{{ page.title }}">
+        </div>
+        {% endif %}
+
+        <header class="post-article__header">
+            <h1 class="post-article__title">{{ page.title }}</h1>
+            <div class="post-article__meta">
+                {% if page.author %}<span class="post-article__author">{{ page.author }}</span>{% endif %}
+                <time class="post-article__date">{{ page.date | date: "%d.%m.%Y" }}</time>
+                {% if page.tags %}
+                <div class="post-article__tags">
+                    {% for tag in page.tags %}
+                    <span class="post-tag">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </header>
+
+        {% if page.intro %}
+        <div class="post-article__intro">{{ page.intro }}</div>
+        {% endif %}
+
+        <div class="post-article__body">
+            {{ content }}
+        </div>
+
+        <!-- Блок автора — показывать только если указан -->
+        {% if page.show_author_bio %}
+        {% include blocks/author-bio.html %}
+        {% endif %}
+
+        <!-- Похожие статьи — показывать только если указано -->
+        {% if page.show_related %}
+        {% include blocks/related-posts.html %}
+        {% endif %}
+
+        <!-- Форма подписки — показывать только если указано -->
+        {% if page.show_subscribe %}
+        {% include blocks/subscribe.html %}
+        {% endif %}
+
+    </div>
+</article>
