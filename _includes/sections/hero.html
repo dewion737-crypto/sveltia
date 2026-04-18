@@ -1,0 +1,30 @@
+<!-- Секция Hero — главный экран -->
+<section id="about" class="hero-section hero-section--marathon_python_global">
+    <div class="hero-section__container">
+        <div class="hero-info">
+            <div class="hero-event-info hero-event-info--top">
+                {% for badge in page.hero_badges_top %}
+                <div class="hero-event-info__item">{{ badge }}</div>
+                {% endfor %}
+            </div>
+            <h1 class="hero-title hero-title--ru">{{ page.hero_title }}</h1>
+            <div class="hero-desc">{{ page.hero_description }}</div>
+            <div class="hero-pic hero-pic--m">
+                <img class="hero-pic__img" src="{{ page.hero_image_mobile }}" alt="">
+            </div>
+            <div class="hero-c2a">
+                <a class="btn btn--dark btn--arrow" rel="external" href="{{ page.hero_button_url | default: '#start' }}">
+                    <span class="btn__label">{{ page.hero_button_text }}</span>
+                </a>
+            </div>
+            <div class="hero-event-info hero-event-info--bottom">
+                {% for badge in page.hero_badges_bottom %}
+                <div class="hero-event-info__item">{{ badge }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="hero-pic hero-pic--d">
+            <img class="hero-pic__img" src="{{ page.hero_image_desktop }}" alt="">
+        </div>
+    </div>
+</section>
