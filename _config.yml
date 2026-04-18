@@ -1,0 +1,11 @@
+title: Мой сайт
+description: Описание сайта
+url: "https://dewion737-crypto.github.io"
+baseurl: "/sveltia"
+
+permalink: /:title/
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
