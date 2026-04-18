@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="{{ page.favicon | default: '/global/python-marathon/favicon.png' }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- CSS стили -->
+    <link href="https://landing.javarush.com/global/python-marathon/kit/immutable/assets/0.f486509e.css" rel="stylesheet">
+    <link href="https://landing.javarush.com/global/python-marathon/kit/immutable/assets/2.436a62ea.css" rel="stylesheet">
+    <link href="https://landing.javarush.com/global/python-marathon/kit/immutable/assets/gtm-id.1eb0c4e7.css" rel="stylesheet">
+
+    <!-- Шрифты -->
+    <link rel="preload" as="font" type="font/woff2" href="https://landing.javarush.com/global/python-marathon/kit/immutable/assets/montserrat-cyrillic-wght-normal.637f5453.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="https://landing.javarush.com/global/python-marathon/kit/immutable/assets/montserrat-latin-wght-normal.bb2f9008.woff2" crossorigin>
+
+    <!-- SEO -->
+    <title>{{ page.title }} | {{ site.title }}</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <meta name="keywords" content="{{ page.keywords }}">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ page.og_title | default: page.title }}">
+    <meta property="og:description" content="{{ page.og_description | default: page.description }}">
+    <meta property="og:image" content="{{ page.og_image }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="{{ site.title }}">
+
+    <!-- Google Tag Manager -->
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://www.google-analytics.com">
+
+    <!-- Кастомные стили страницы (если есть) -->
+    {% if page.custom_css %}
+    <style>{{ page.custom_css }}</style>
+    {% endif %}
+
+    <style>
+        :root { --override-site-layout-sidebar-width: 0; }
+        .mobile-panel { position: fixed; top: 0; right: -100%; width: 80%; max-width: 320px; height: 100%; background-color: #1a1a2e; z-index: 1000; transition: right 0.3s ease; box-shadow: -2px 0 10px rgba(0,0,0,0.3); overflow-y: auto; }
+        .mobile-panel.open { right: 0; }
+        .mobile-panel__overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+        .mobile-panel__overlay.open { opacity: 1; visibility: visible; }
+        .mobile-panel__header { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .mobile-panel__close { background: none; border: none; cursor: pointer; padding: 8px; }
+        .mobile-panel__nav { padding: 20px; }
+        .mobile-panel__nav-list { list-style: none; padding: 0; margin: 0; }
+        .mobile-panel__nav-item { margin-bottom: 20px; }
+        .mobile-panel__nav-link { color: #fff; text-decoration: none; font-size: 18px; font-weight: 500; transition: color 0.2s ease; }
+        .mobile-panel__nav-link:hover { color: #8c4ceb; }
+        body.menu-open { overflow: hidden; }
+    </style>
+</head>
+<body>
+    <div style="display: contents">
+
+        <!-- GTM noscript -->
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MLLVQ86F" height="0" width="0" title="gtm no script" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+
+        <!-- SVG иконки -->
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="icon-mobile-panel-open" viewBox="0 0 18 16">
+                <rect x="1" y="1" width="16" height="2" rx="1" fill="currentColor"></rect>
+                <rect x="5" y="7" width="12" height="2" rx="1" fill="currentColor"></rect>
+                <rect x="1" y="13" width="16" height="2" rx="1" fill="currentColor"></rect>
+            </symbol>
+            <symbol id="icon-mobile-panel-close" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="m13.658 2.658-.002-.002a.994.994 0 0 0-1.089-.216.999.999 0 0 0-.324.216L8 6.9 3.757 2.656a.995.995 0 0 0-1.09-.216.996.996 0 0 0-.323.216l-.002.002a.997.997 0 0 0 0 1.412l4.244 4.244-4.244 4.243a.994.994 0 0 0-.216 1.089 1.001 1.001 0 0 0 .216.324l.002.001a.993.993 0 0 0 .901.274.997.997 0 0 0 .512-.274L8 9.728l4.243 4.243a.996.996 0 0 0 1.09.217 1.009 1.009 0 0 0 .323-.217l.002-.001a1.002 1.002 0 0 0 0-1.413L9.414 8.314l4.244-4.244a.999.999 0 0 0 0-1.412z" fill="currentColor"></path>
+            </symbol>
+        </svg>
+
+        <!-- Мобильное меню -->
+        <div class="mobile-panel__overlay" id="mobileOverlay"></div>
+        <div class="mobile-panel" id="mobilePanel">
+            <div class="mobile-panel__header">
+                <div class="site-logo site-logo--header site-logo--jr-white" style="width: 120px; height: 32px;"></div>
+                <button class="mobile-panel__close" id="closeMenuBtn">
+                    <svg width="24" height="24" viewBox="0 0 16 16" fill="white"><use href="#icon-mobile-panel-close"></use></svg>
+                </button>
+            </div>
+            <div class="mobile-panel__nav">
+                <ul class="mobile-panel__nav-list">
+                    {% for item in page.nav_items %}
+                    <li class="mobile-panel__nav-item">
+                        <a class="mobile-panel__nav-link" href="{{ item.url }}" data-mobile-link>{{ item.label }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Основной контейнер -->
+        <div class="site">
+
+            <!-- Шапка -->
+            {% include header.html %}
+
+            <!-- Секции страницы — подключаются из front matter -->
+            {% for section in page.sections %}
+                {% include sections/{{ section }}.html %}
+            {% endfor %}
+
+            <!-- Основной контент (для постов блога) -->
+            {{ content }}
+
+            <!-- Подвал -->
+            {% include footer.html %}
+
+        </div>
+
+        <!-- JS мобильного меню -->
+        <script>
+            (function() {
+                const openBtn = document.getElementById('openMenuBtn');
+                const closeBtn = document.getElementById('closeMenuBtn');
+                const panel = document.getElementById('mobilePanel');
+                const overlay = document.getElementById('mobileOverlay');
+                const mobileLinks = document.querySelectorAll('[data-mobile-link]');
+                function openMenu() { panel.classList.add('open'); overlay.classList.add('open'); document.body.classList.add('menu-open'); }
+                function closeMenu() { panel.classList.remove('open'); overlay.classList.remove('open'); document.body.classList.remove('menu-open'); }
+                if (openBtn) openBtn.addEventListener('click', openMenu);
+                if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+                if (overlay) overlay.addEventListener('click', closeMenu);
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) target.scrollIntoView({ behavior: 'smooth' });
+                        closeMenu();
+                    });
+                });
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') closeMenu();
+                });
+            })();
+        </script>
+    </div>
+</body>
+</html>
