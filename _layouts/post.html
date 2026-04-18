@@ -1,0 +1,63 @@
+---
+layout: default
+---
+
+<!-- Hero секция статьи -->
+<div class="hero">
+  {% if page.tag %}
+  <div class="hero-tag">{{ page.tag }}</div>
+  {% endif %}
+  <h1>{{ page.title }}</h1>
+  {% if page.author or page.read_time %}
+  <div class="hero-meta">
+    {% if page.author %}Автор: {{ page.author }}{% endif %}
+    {% if page.read_time %} · Время чтения: {{ page.read_time }}{% endif %}
+  </div>
+  {% endif %}
+  {% if page.intro %}
+  <p class="hero-intro">{{ page.intro }}</p>
+  {% endif %}
+</div>
+
+<!-- Тело статьи -->
+<div class="page-wrap">
+
+  <!-- Оглавление — если указано -->
+  {% if page.toc %}
+  <div class="card toc">
+    <div class="toc-title">Содержание статьи</div>
+    <ol>
+      {% for item in page.toc %}
+      <li><a href="#{{ item.id }}">{{ item.title }}</a></li>
+      {% endfor %}
+    </ol>
+  </div>
+  {% endif %}
+
+  <!-- Основной контент статьи -->
+  <div class="card">
+    {{ content }}
+  </div>
+
+  <!-- CTA блок — если указан -->
+  {% if page.cta_title %}
+  <div class="cta-block">
+    <h2>{{ page.cta_title }}</h2>
+    <p>{{ page.cta_text }}</p>
+    <a href="{{ page.cta_url }}" class="cta-btn">{{ page.cta_button }} →</a>
+  </div>
+  {% endif %}
+
+  <!-- Теги и футер статьи -->
+  {% if page.tags %}
+  <div class="card article-footer">
+    <p>{{ page.footer_text }}</p>
+    <div class="tags">
+      {% for tag in page.tags %}
+      <span class="tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+</div>

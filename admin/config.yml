@@ -1,15 +1,50 @@
 backend:
   name: github
-  repo: dewion737-crypto/sveltia 
+  repo: dewion737-crypto/sveltia
+  branch: main
 
-media_folder: media
+media_folder: "assets/images"
+public_folder: "/assets/images"
 
 collections:
   - name: posts
-    label: Posts
+    label: Статьи
     folder: _posts
     create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: Title, name: title, widget: string }
-      - { label: Date, name: date, widget: datetime }
-      - { label: Body, name: body, widget: markdown }
+      # Основное
+      - {label: Заголовок,      name: title,      widget: string}
+      - {label: Дата,           name: date,        widget: datetime}
+      - {label: Автор,          name: author,      widget: string,  required: false}
+      - {label: Время чтения,   name: read_time,   widget: string,  required: false, hint: "Например: 8 минут"}
+      - {label: Тег (бейдж),    name: tag,         widget: string,  required: false, hint: "Например: ✈ Разговорный английский"}
+      - {label: Вступление,     name: intro,       widget: text,    required: false}
+      - {label: Текст статьи,   name: body,        widget: markdown}
+
+      # SEO
+      - {label: Description,    name: description, widget: string,  required: false}
+      - {label: Canonical URL,  name: canonical,   widget: string,  required: false}
+      - {label: OG картинка,    name: og_image,    widget: image,   required: false}
+
+      # CTA блок
+      - {label: CTA заголовок,  name: cta_title,   widget: string,  required: false}
+      - {label: CTA текст,      name: cta_text,    widget: text,    required: false}
+      - {label: CTA кнопка,     name: cta_button,  widget: string,  required: false}
+      - {label: CTA ссылка,     name: cta_url,     widget: string,  required: false}
+
+      # Теги
+      - label: Теги статьи
+        name: tags
+        widget: list
+        required: false
+        field: {label: Тег, name: tag, widget: string}
+
+      # Оглавление
+      - label: Оглавление
+        name: toc
+        widget: list
+        required: false
+        fields:
+          - {label: ID якоря,  name: id,    widget: string}
+          - {label: Название,  name: title, widget: string}

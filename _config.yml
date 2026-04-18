@@ -1,9 +1,20 @@
-title: Мой сайт
-description: Описание сайта
+title: English-lessons.online
+description: Уроки английского онлайн
 url: "https://dewion737-crypto.github.io"
 baseurl: "/sveltia"
+footer_text: "© 2026 English-lessons.online"
 
 permalink: /:title/
+
+nav:
+  - label: О курсе
+    url: "/#about-course"
+  - label: Преподаватель
+    url: "/#teacher"
+  - label: Программа
+    url: "/#program"
+  - label: Блог
+    url: "/blog"
 
 exclude:
   - Gemfile

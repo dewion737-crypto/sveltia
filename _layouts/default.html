@@ -1,142 +1,116 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="{{ page.favicon | default: '/global/python-marathon/favicon.png' }}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page.title }} | {{ site.title }}</title>
+<meta name="description" content="{{ page.description | default: site.description }}">
+{% if page.canonical %}<link rel="canonical" href="{{ page.canonical }}">{% endif %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- CSS стили -->
-    <link href="https://landing.javarush.com/global/python-marathon/kit/immutable/assets/0.f486509e.css" rel="stylesheet">
-    <link href="https://landing.javarush.com/global/python-marathon/kit/immutable/assets/2.436a62ea.css" rel="stylesheet">
-    <link href="https://landing.javarush.com/global/python-marathon/kit/immutable/assets/gtm-id.1eb0c4e7.css" rel="stylesheet">
+<!-- Open Graph -->
+<meta property="og:title" content="{{ page.og_title | default: page.title }}">
+<meta property="og:description" content="{{ page.og_description | default: page.description }}">
+{% if page.og_image %}<meta property="og:image" content="{{ page.og_image }}">{% endif %}
+<meta property="og:site_name" content="{{ site.title }}">
 
-    <!-- Шрифты -->
-    <link rel="preload" as="font" type="font/woff2" href="https://landing.javarush.com/global/python-marathon/kit/immutable/assets/montserrat-cyrillic-wght-normal.637f5453.woff2" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="https://landing.javarush.com/global/python-marathon/kit/immutable/assets/montserrat-latin-wght-normal.bb2f9008.woff2" crossorigin>
+<style>
+  :root {
+    --green: #1db954;
+    --green-dark: #17a045;
+    --green-light: #e8f8ed;
+    --bg: #f0f2f5;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --text-muted: #555;
+    --border: #e0e4ea;
+    --shadow: 0 2px 16px rgba(0,0,0,0.07);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; }
 
-    <!-- SEO -->
-    <title>{{ page.title }} | {{ site.title }}</title>
-    <meta name="description" content="{{ page.description | default: site.description }}">
-    <meta name="keywords" content="{{ page.keywords }}">
+  /* Шапка */
+  .site-header { background: #fff; border-bottom: 1px solid var(--border); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 8px rgba(0,0,0,0.05); }
+  .site-logo { font-size: 1.1rem; font-weight: 800; color: var(--green); text-decoration: none; }
+  .site-nav { display: flex; gap: 28px; }
+  .site-nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+  .site-nav a:hover { color: var(--green); }
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="{{ page.og_title | default: page.title }}">
-    <meta property="og:description" content="{{ page.og_description | default: page.description }}">
-    <meta property="og:image" content="{{ page.og_image }}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="{{ site.title }}">
+  /* Карточки и контейнер */
+  .page-wrap { max-width: 800px; margin: 0 auto; padding: 40px 20px 80px; }
+  .card { background: var(--card); border-radius: 16px; box-shadow: var(--shadow); padding: 32px; margin-bottom: 24px; }
 
-    <!-- Google Tag Manager -->
-    <link rel="preconnect" href="https://www.googletagmanager.com">
-    <link rel="preconnect" href="https://www.google-analytics.com">
+  /* Типографика */
+  h2 { font-size: 1.4rem; font-weight: 800; color: var(--text); margin-bottom: 16px; letter-spacing: -0.02em; }
+  h2 span { color: var(--green); }
+  h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin: 24px 0 12px; }
+  p { margin-bottom: 14px; color: var(--text-muted); }
+  p strong { color: var(--text); }
 
-    <!-- Кастомные стили страницы (если есть) -->
-    {% if page.custom_css %}
-    <style>{{ page.custom_css }}</style>
-    {% endif %}
+  /* Блоки с фразами */
+  .phrase-block { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); margin: 16px 0 24px; }
+  .phrase-block-header { background: var(--green); color: #fff; padding: 10px 18px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .phrase-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .phrase-row:last-child { border-bottom: none; }
+  .phrase-row:hover { background: var(--green-light); }
+  .phrase-en { padding: 11px 18px; font-weight: 600; font-size: 0.9rem; border-right: 1px solid var(--border); color: var(--text); }
+  .phrase-ru { padding: 11px 18px; font-size: 0.88rem; color: var(--text-muted); }
 
-    <style>
-        :root { --override-site-layout-sidebar-width: 0; }
-        .mobile-panel { position: fixed; top: 0; right: -100%; width: 80%; max-width: 320px; height: 100%; background-color: #1a1a2e; z-index: 1000; transition: right 0.3s ease; box-shadow: -2px 0 10px rgba(0,0,0,0.3); overflow-y: auto; }
-        .mobile-panel.open { right: 0; }
-        .mobile-panel__overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
-        .mobile-panel__overlay.open { opacity: 1; visibility: visible; }
-        .mobile-panel__header { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .mobile-panel__close { background: none; border: none; cursor: pointer; padding: 8px; }
-        .mobile-panel__nav { padding: 20px; }
-        .mobile-panel__nav-list { list-style: none; padding: 0; margin: 0; }
-        .mobile-panel__nav-item { margin-bottom: 20px; }
-        .mobile-panel__nav-link { color: #fff; text-decoration: none; font-size: 18px; font-weight: 500; transition: color 0.2s ease; }
-        .mobile-panel__nav-link:hover { color: #8c4ceb; }
-        body.menu-open { overflow: hidden; }
-    </style>
+  /* Подсказки */
+  .tip-box { background: var(--green-light); border-left: 4px solid var(--green); border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 20px 0; font-size: 0.93rem; }
+  .tip-box p { margin: 0; color: var(--text); }
+  .tip-box strong { color: var(--green-dark); }
+  .warn-box { background: #fff8e1; border-left: 4px solid #f5a623; border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 16px 0; font-size: 0.92rem; color: var(--text); }
+
+  /* Цитата */
+  .pull-quote { text-align: center; font-size: 1.1rem; font-weight: 700; color: var(--text); padding: 24px 0; border-top: 2px solid var(--green-light); border-bottom: 2px solid var(--green-light); margin: 28px 0; line-height: 1.5; }
+  .pull-quote span { color: var(--green); }
+
+  /* CTA блок */
+  .cta-block { background: var(--green); border-radius: 16px; padding: 40px 32px; text-align: center; margin: 8px 0 24px; }
+  .cta-block h2 { color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
+  .cta-block p { color: rgba(255,255,255,0.85); margin-bottom: 24px; font-size: 0.97rem; }
+  .cta-btn { display: inline-block; background: #fff; color: var(--green-dark); padding: 14px 32px; border-radius: 50px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s; box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+
+  /* Теги */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .tag { background: var(--green-light); color: var(--green-dark); padding: 4px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+
+  /* Футер статьи */
+  .article-footer { border-top: 1px solid var(--border); padding-top: 20px; color: var(--text-muted); font-size: 0.85rem; }
+  .article-footer a { color: var(--green); text-decoration: none; }
+
+  /* Список постов на главной */
+  .posts-grid { display: grid; gap: 20px; }
+  .post-card { background: var(--card); border-radius: 16px; box-shadow: var(--shadow); padding: 24px 28px; text-decoration: none; color: inherit; display: block; transition: transform 0.15s, box-shadow 0.15s; border: 1px solid var(--border); }
+  .post-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.1); }
+  .post-card__tag { display: inline-block; background: var(--green-light); color: var(--green-dark); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
+  .post-card__title { font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+  .post-card__excerpt { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 12px; }
+  .post-card__meta { font-size: 0.78rem; color: var(--text-muted); }
+
+  /* Подвал сайта */
+  .site-footer { background: #fff; border-top: 1px solid var(--border); padding: 32px; text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 40px; }
+  .site-footer a { color: var(--green); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .site-nav { display: none; }
+    .card { padding: 20px; }
+    .phrase-row { grid-template-columns: 1fr; }
+    .phrase-en { border-right: none; border-bottom: 1px solid var(--border); }
+    .cta-block { padding: 28px 20px; }
+    .site-header { padding: 14px 20px; }
+  }
+</style>
 </head>
 <body>
-    <div style="display: contents">
 
-        <!-- GTM noscript -->
-        <noscript>
-            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MLLVQ86F" height="0" width="0" title="gtm no script" style="display:none;visibility:hidden"></iframe>
-        </noscript>
+{% include header.html %}
 
-        <!-- SVG иконки -->
-        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-            <symbol id="icon-mobile-panel-open" viewBox="0 0 18 16">
-                <rect x="1" y="1" width="16" height="2" rx="1" fill="currentColor"></rect>
-                <rect x="5" y="7" width="12" height="2" rx="1" fill="currentColor"></rect>
-                <rect x="1" y="13" width="16" height="2" rx="1" fill="currentColor"></rect>
-            </symbol>
-            <symbol id="icon-mobile-panel-close" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="m13.658 2.658-.002-.002a.994.994 0 0 0-1.089-.216.999.999 0 0 0-.324.216L8 6.9 3.757 2.656a.995.995 0 0 0-1.09-.216.996.996 0 0 0-.323.216l-.002.002a.997.997 0 0 0 0 1.412l4.244 4.244-4.244 4.243a.994.994 0 0 0-.216 1.089 1.001 1.001 0 0 0 .216.324l.002.001a.993.993 0 0 0 .901.274.997.997 0 0 0 .512-.274L8 9.728l4.243 4.243a.996.996 0 0 0 1.09.217 1.009 1.009 0 0 0 .323-.217l.002-.001a1.002 1.002 0 0 0 0-1.413L9.414 8.314l4.244-4.244a.999.999 0 0 0 0-1.412z" fill="currentColor"></path>
-            </symbol>
-        </svg>
+{{ content }}
 
-        <!-- Мобильное меню -->
-        <div class="mobile-panel__overlay" id="mobileOverlay"></div>
-        <div class="mobile-panel" id="mobilePanel">
-            <div class="mobile-panel__header">
-                <div class="site-logo site-logo--header site-logo--jr-white" style="width: 120px; height: 32px;"></div>
-                <button class="mobile-panel__close" id="closeMenuBtn">
-                    <svg width="24" height="24" viewBox="0 0 16 16" fill="white"><use href="#icon-mobile-panel-close"></use></svg>
-                </button>
-            </div>
-            <div class="mobile-panel__nav">
-                <ul class="mobile-panel__nav-list">
-                    {% for item in page.nav_items %}
-                    <li class="mobile-panel__nav-item">
-                        <a class="mobile-panel__nav-link" href="{{ item.url }}" data-mobile-link>{{ item.label }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
+{% include footer.html %}
 
-        <!-- Основной контейнер -->
-        <div class="site">
-
-            <!-- Шапка -->
-            {% include header.html %}
-
-            <!-- Секции страницы — подключаются из front matter -->
-            {% for section in page.sections %}
-                {% include sections/{{ section }}.html %}
-            {% endfor %}
-
-            <!-- Основной контент (для постов блога) -->
-            {{ content }}
-
-            <!-- Подвал -->
-            {% include footer.html %}
-
-        </div>
-
-        <!-- JS мобильного меню -->
-        <script>
-            (function() {
-                const openBtn = document.getElementById('openMenuBtn');
-                const closeBtn = document.getElementById('closeMenuBtn');
-                const panel = document.getElementById('mobilePanel');
-                const overlay = document.getElementById('mobileOverlay');
-                const mobileLinks = document.querySelectorAll('[data-mobile-link]');
-                function openMenu() { panel.classList.add('open'); overlay.classList.add('open'); document.body.classList.add('menu-open'); }
-                function closeMenu() { panel.classList.remove('open'); overlay.classList.remove('open'); document.body.classList.remove('menu-open'); }
-                if (openBtn) openBtn.addEventListener('click', openMenu);
-                if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-                if (overlay) overlay.addEventListener('click', closeMenu);
-                mobileLinks.forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const target = document.querySelector(this.getAttribute('href'));
-                        if (target) target.scrollIntoView({ behavior: 'smooth' });
-                        closeMenu();
-                    });
-                });
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') closeMenu();
-                });
-            })();
-        </script>
-    </div>
 </body>
 </html>

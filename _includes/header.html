@@ -1,24 +1,8 @@
-<!-- Шапка сайта -->
-<div class="header header--marathon_python_global" id="header">
-    <div class="header__container">
-        <a class="header__logo" href="{{ page.logo_url | default: '/' }}">
-            <div class="site-logo site-logo--header site-logo--jr-current-color"></div>
-        </a>
-        <div class="header__page-nav">
-            <ul class="page-nav">
-                {% for item in page.nav_items %}
-                <li class="page-nav__item">
-                    <a class="page-nav__link" rel="external" href="{{ item.url }}">{{ item.label }}</a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <button class="mobile-panel-btn" id="openMenuBtn">
-            <svg width="24" height="24" viewBox="0 0 18 16" fill="currentColor">
-                <rect x="1" y="1" width="16" height="2" rx="1"></rect>
-                <rect x="5" y="7" width="12" height="2" rx="1"></rect>
-                <rect x="1" y="13" width="16" height="2" rx="1"></rect>
-            </svg>
-        </button>
-    </div>
-</div>
+<header class="site-header">
+  <a href="{{ site.url }}" class="site-logo">{{ site.title }}</a>
+  <nav class="site-nav">
+    {% for item in site.nav %}
+    <a href="{{ item.url }}">{{ item.label }}</a>
+    {% endfor %}
+  </nav>
+</header>
